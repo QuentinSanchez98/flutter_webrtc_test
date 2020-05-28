@@ -15,7 +15,7 @@ Am I using the library correctly ? Or is just WebRTC / my device that is unable 
 #### Reproduce
 
 As an example, I've made another application, as a test, printing and updating the amount of used file descriptors every seconds. If you click the `+` button, a new `RTCPeerConnection` will be created and will establish a negotiation with an other
-* `git clone git@github.com:QuentinSanchez98/flutter_webrtc_test.git`
+* `git clone https://github.com/QuentinSanchez98/flutter_webrtc_test.git`
 * Edit `rtcConfiguration` at `lib/main.dart l:52` with you configuration
 * `flutter packages get`
 * `flutter run`
