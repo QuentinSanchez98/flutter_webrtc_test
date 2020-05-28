@@ -1,4 +1,4 @@
-#### iOS - Too many open files
+### iOS - Too many open files
 
 Hello,
 
@@ -12,11 +12,37 @@ The problem is : the application must handle conferences calls with 5-10 people.
 
 Am I using the library correctly ? Or is just WebRTC / my device that is unable to support so many `RTCPeerConnection` ?
 
-#### Way to reproduce
+#### Reproduce
 
 As an example, I've made another application, as a test, printing and updating the amount of used file descriptors every seconds. If you click the `+` button, a new `RTCPeerConnection` will be created and will establish a negotiation with an other
 * `git clone git@github.com:QuentinSanchez98/flutter_webrtc_test.git`
 * Edit `rtcConfiguration` at `lib/main.dart l:52` with you configuration
+* `flutter packages get`
 * `flutter run`
 * Click on `+` to add more RTCPeerConnection
 * See the amount of file descriptor increase
+
+#### Environment
+
+> flutter doctor -v
+
+```
+[✓] Flutter (Channel beta, 1.18.0-11.1.pre, on Mac OS X 10.15.5 19F96, locale fr-FR)
+    • Flutter version 1.18.0-11.1.pre at /Users/quentin/Library/Flutter
+    • Framework revision 2738a1148b (2 weeks ago), 2020-05-13 15:24:36 -0700
+    • Engine revision ef9215ceb2
+    • Dart version 2.9.0 (build 2.9.0-8.2.beta)
+
+✓] Xcode - develop for iOS and macOS (Xcode 11.5)
+    • Xcode at /Applications/Xcode.app/Contents/Developer
+    • Xcode 11.5, Build version 11E608c
+    • CocoaPods version 1.8.4
+
+[✓] IntelliJ IDEA Ultimate Edition (version 2019.3.4)
+    • IntelliJ at /Applications/IntelliJ IDEA.app
+    • Flutter plugin version 44.0.3
+    • Dart plugin version 193.6911.31
+
+[✓] Connected device (1 available)
+    • Quentin S • 00008030-000C193426E8802E • ios • iOS 13.5
+```
