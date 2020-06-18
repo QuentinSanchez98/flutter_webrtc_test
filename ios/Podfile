@@ -37,6 +37,7 @@ target 'Runner' do
   use_modular_headers!
 
   # Flutter Pod
+  pod 'GoogleWebRTC', :podspec => 'https://raw.githubusercontent.com/julian-ladjani/GoogleWebRTC/master/podspec.json'
 
   copied_flutter_dir = File.join(__dir__, 'Flutter')
   copied_framework_path = File.join(copied_flutter_dir, 'Flutter.framework')

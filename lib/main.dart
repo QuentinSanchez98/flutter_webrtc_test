@@ -52,11 +52,22 @@ final Map<String, dynamic> defaultSdpConstraints = {
 final Map<String, dynamic> rtcConfiguration = {
   'iceServers': [
     {
-      'credential': 'XXX',
-      'urls': ['XXX'],
-      'username': 'XXX'
+      'username': '1591129598:pandalab.fr',
+      'credential': '1/+xPxSyc8W1yqSLviszwDUeBsU=',
+      'urls': ['stun:turn.pandalab.fr:443']
+    },
+    {
+      'username': '1591129598:pandalab.fr',
+      'credential': '1/+xPxSyc8W1yqSLviszwDUeBsU=',
+      'urls': [
+        'turn:turn.pandalab.fr:443?transport=udp',
+        'turn:turn.pandalab.fr:443?transport=tcp'
+        // 'turn:turn.pandalab.fr:80?transport=udp',
+        // 'turn:turn.pandalab.fr:80?transport=tcp'
+      ]
     }
-  ]
+  ],
+  'continualGatheringPolicy': 'gather_once'
 };
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -75,19 +86,24 @@ class _MyHomePageState extends State<MyHomePage> {
     });
 
     createPeerConnection(rtcConfiguration, loopbackConstraints)
-        .then((peer) => _peer = peer);
+        .then((peer) =>_peer = peer);
   }
 
   _addPeer() async {
     RTCPeerConnection remote = await createPeerConnection(rtcConfiguration, loopbackConstraints);
 
-    final offer = await _peer.createOffer(defaultSdpConstraints);
-    await _peer.setLocalDescription(offer);
-    await remote.setRemoteDescription(offer);
+    var offer = await _peer.createOffer(defaultSdpConstraints);
+    _peer.setLocalDescription(RTCSessionDescription(
+        offer.sdp, offer.type));
+    remote.setRemoteDescription(RTCSessionDescription(
+        offer.sdp, offer.type));
+    offer = null;
 
-    final answer = await remote.createAnswer(defaultSdpConstraints);
-    await remote.setLocalDescription(answer);
-    await _peer.setRemoteDescription(answer);
+    var answer = await remote.createAnswer(defaultSdpConstraints);
+    remote.setLocalDescription(RTCSessionDescription(
+        answer.sdp, answer.type));
+    _peer.setRemoteDescription(RTCSessionDescription(answer.sdp, answer.type));
+    answer = null;
 
     setState(() { _remotes = _remotes + [remote]; });
   }
